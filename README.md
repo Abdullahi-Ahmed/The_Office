@@ -113,4 +113,13 @@ models:
 </details>  
 
 ## Documentations
-Documentation is a critical aspect of any data transformation project. One of the primary ways to document your DBT project is through the use of YAML files, which allow you to define metadata about your models, such as their description, owner, and source. This metadata can be used to generate documentation and lineage diagrams automatically, making it easier for others to understand the purpose and structure of your code. 
+Documentation is a critical aspect of any data transformation project. In dbt, models are documented in YAML files alongside generic tests in the same folder. Descriptions can be provided at the model, source, or column level, and doc blocks can be used for more detailed descriptions.  
+
+Documentation can be generated and viewed through the  `dbt docs generate`  command, which provides a lineage graph, model and column descriptions, underlying SQL code, and more.  
+
+## Deployment
+process of moving your code from a development environment to a production environment. DBT does not have built-in deployment functionality, but it integrates with several deployment tools such as Jenkins, CircleCI, and GitLab.
+
+To deploy your DBT code, you need to use a deployment tool that suits your needs and set up a deployment pipeline. Typically, a deployment pipeline includes several stages, such as building, testing, and deploying your code.
+
+One common deployment workflow is to use a version control system like Git to store your DBT code, then use a continuous integration and continuous deployment (CI/CD) tool like Jenkins or CircleCI to build and deploy your code. The CI/CD tool can be configured to automatically build and test your code when changes are made, and then deploy it to a production environment when it passes all tests.
