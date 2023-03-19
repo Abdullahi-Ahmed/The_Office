@@ -87,7 +87,7 @@ Tests are used to validate the output of your data transformations and ensure th
 
 | **📝 Note** |
 |:---------|
-| To learn more interesting details, you can check out my blog post titled [5 DBT Test Lessons We Can Learn from The Office](https://saturncloud.io/). |  
+| To learn more interesting details, you can check out my blog post titled [5 DBT Test Lessons We Can Learn from The Office](https://medium.com/@aaomar/5-dbt-tests-lessons-we-can-learn-from-the-office-7b177b2eb031). |  
 
 <details>
 
@@ -111,3 +111,6 @@ models:
 ---
 
 </details>  
+
+## Documentations
+Documentation is a critical aspect of any data transformation project. One of the primary ways to document your DBT project is through the use of YAML files, which allow you to define metadata about your models, such as their description, owner, and source. This metadata can be used to generate documentation and lineage diagrams automatically, making it easier for others to understand the purpose and structure of your code. 
