@@ -61,4 +61,53 @@ Simple dbt model `Stg_Customers.sql`:
 </details>  
 
 
+## Sources
+A source refers to the data that is used as input for models. Dbt makes it easy to define and manage sources through YAML configuration files. [Sources](https://docs.getdbt.com/docs/build/sources)  
 
+Here's an example of a direct source definition in dbt  
+```yaml
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+    schema: jaffle_shop
+    tables:
+      - name: customer
+        description: Raw customers data.
+        columns:
+          - name: id
+            description: Primary key for customers.
+
+```
+These helps in Standardization and reusability, Version control and collaboration, Documentation and transparency & Flexibility and modularity.  
+
+## Test
+Tests are used to validate the output of your data transformations and ensure that they meet expected criteria. Tests can be defined for individual models or across an entire DBT project, and they can be run as part of a DBT pipeline to ensure that data is transformed correctly and consistently. [Test](https://docs.getdbt.com/docs/build/tests)  
+
+| **📝 Note** |
+|:---------|
+| To learn more interesting details, you can check out my blog post titled [5 DBT Test Lessons We Can Learn from The Office](https://saturncloud.io/). |  
+
+<details>
+
+<summary> Here's an example of a dbt test </summary>
+
+---
+
+```yml
+version: 2
+
+models:
+  - name: orders
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+```
+
+---
+
+</details>  
