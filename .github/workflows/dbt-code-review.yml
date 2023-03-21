@@ -1,0 +1,29 @@
+name: lint and test dbt project on pull request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint_and_test_project:
+    name: Lint and Test dbt project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      - name: Install SQLFluff and dbt
+        run: |
+          pip install sqlfluff==0.13.1
+          pip install dbt==0.21.2
+      - name: Lint project
+        run: sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
+      - name: Test project
+        run: dbt test
+      - name: Print success message
+        run: echo "The Code Seems Good to GO!"
