@@ -1,7 +1,7 @@
 jaffle_shop:
-  target: ${{ secrets.DTB_PROFILE_TARGET }}
+  target: development
   outputs:
-    dev:
+    development:
       type: snowflake
       account: ${{ secrets.DTB_PROFILE_ACCOUNT }}
 
