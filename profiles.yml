@@ -1,0 +1,15 @@
+jaffle_shop:
+  target: ${{ secrets.DTB_PROFILE_TARGET }}
+  outputs:
+    dev:
+      type: snowflake
+      account: ${{ secrets.DTB_PROFILE_ACCOUNT }}
+
+      # User/password auth
+      user: ${{ secrets.DTB_PROFILE_USER }} 
+      password: ${{ secrets.DTB_PROFILE_PW }} 
+
+      role: ${{ secrets.DTB_PROFILE_ROLE }} 
+      database: ${{ secrets.DTB_PROFILE_DB }} 
+      warehouse: ${{ secrets.DTB_PROFILE_WH }} 
+      schema: ${{ secrets.DTB_PROFILE_SCHEMA }} 
