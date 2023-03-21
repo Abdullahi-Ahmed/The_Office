@@ -15,6 +15,10 @@ env:
   DTB_PROFILE_USER : ${{ secrets.DTB_PROFILE_USER  }}
   DTB_PROFILE_PW : ${{ secrets.DTB_PROFILE_PW  }}
   DTB_PROFILE_ROLE : ${{ secrets.DTB_PROFILE_ROLE  }}
+  DTB_PROFILE_ACCOUNT: ${{ secrets.DTB_PROFILE_ACCOUNT }}
+  DTB_PROFILE_DB : ${{ secrets.DTB_PROFILE_DB  }}
+  DTB_PROFILE_WH  : ${{ secrets.DTB_PROFILE_WH   }}
+  DTB_PROFILE_SCHEMA : ${{ secrets.DTB_PROFILE_SCHEMA  }}
 
 
 jobs:
