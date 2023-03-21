@@ -164,6 +164,72 @@ The jobs section defines the job that the action will perform, which is named li
 ## Deployment
 process of moving your code from a development environment to a production environment. DBT does not have built-in deployment functionality, but it integrates with several deployment tools such as Jenkins, CircleCI, and GitLab.
 
-To deploy your DBT code, you need to use a deployment tool that suits your needs and set up a deployment pipeline. Typically, a deployment pipeline includes several stages, such as building, testing, and deploying your code.
+It's important to combining ingestion and transformation schedules into a single workflow because it increases efficiency, improves data consistency, and simplifies maintainability. It streamlines the entire data pipeline, reduces the risk of errors, and makes it easier to maintain and scale.
 
-One common deployment workflow is to use a version control system like Git to store your DBT code, then use a continuous integration and continuous deployment (CI/CD) tool like Jenkins or CircleCI to build and deploy your code. The CI/CD tool can be configured to automatically build and test your code when changes are made, and then deploy it to a production environment when it passes all tests.
+Here are the hottest options of orchestration tools that can combine ingestion and transformation schedules into one workflow:
+
+| **📝 Note** |
+|:---------|
+| [Airflow:](https://airflow.apache.org/docs/apache-airflow/stable/) Airflow is an open-source platform for creating, scheduling, and monitoring workflows | 
+
+| **📝 Note** |
+|:---------|
+| [Dagster:](https://docs.dagster.io/getting-started) Dagster is an open-source data orchestration tool that allows you to define, schedule, and monitor data pipelines. |
+
+| **📝 Note** |
+|:---------|
+| [Prefect:](https://www.prefect.io/opensource/) Prefect is another open-source workflow management platform that provides a way to orchestrate data pipelines |
+
+Here is an example of a [Prefect:](https://www.prefect.io/opensource/) workflow that combines Fivetran schedule and dbt cloud job in one Python script using the prefect library:
+
+```python
+import prefect
+from prefect import task, Flow
+import requests
+
+
+# Define Fivetran task
+@task
+def trigger_fivetran_schedule(connector_id, api_key):
+    endpoint = 'https://api.fivetran.com'
+    url = f'{endpoint}/v1/connectors/{connector_id}/force'
+    headers = {'Authorization': f'Bearer {api_key}'}
+    response = requests.post(url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
+# Define dbt cloud task
+@task
+def trigger_dbt_cloud_job(job_id, environment_id, api_key):
+    endpoint = 'https://cloud.getdbt.com/api/v2'
+    url = f'{endpoint}/accounts/self/runs'
+    headers = {'Authorization': f'Token {api_key}'}
+    data = {'job_id': job_id, 'environment_id': environment_id}
+    response = requests.post(url, headers=headers, json=data)
+    response.raise_for_status()
+    return response.json()
+
+
+# Define the workflow
+with Flow('fivetran_dbt_workflow') as flow:
+    # Set inputs for tasks
+    connector_id = prefect.Parameter('connector_id', default='YOUR_CONNECTOR_ID')
+    fivetran_api_key = prefect.Parameter('fivetran_api_key', default='YOUR_FIVETRAN_API_KEY')
+    dbt_job_id = prefect.Parameter('dbt_job_id', default='YOUR_DBT_JOB_ID')
+    dbt_env_id = prefect.Parameter('dbt_env_id', default='YOUR_DBT_ENVIRONMENT_ID')
+    dbt_api_key = prefect.Parameter('dbt_api_key', default='YOUR_DBT_API_KEY')
+
+    # Trigger Fivetran schedule and dbt cloud job
+    fivetran_task = trigger_fivetran_schedule(connector_id, fivetran_api_key)
+    dbt_task = trigger_dbt_cloud_job(dbt_job_id, dbt_env_id, dbt_api_key)
+
+    # Set dependencies between tasks
+    dbt_task.set_upstream(fivetran_task)
+
+# Run the workflow
+flow.run()
+
+```
+
+---
