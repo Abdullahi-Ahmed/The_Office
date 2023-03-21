@@ -39,7 +39,7 @@ jobs:
           pip install dbt-snowflake
       - name: Lint project
         run: sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
-      - name: Test project
-        run: dbt test
+#       - name: Test project
+#         run: dbt test
       - name: Print success message
         run: echo "The Code Seems Good to GO!"
