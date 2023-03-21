@@ -1,9 +1,14 @@
 name: lint and test dbt project on pull request
 
-on:
-  pull_request:
-    branches:
-      - main
+on: 
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'  
 
 jobs:
   lint_and_test_project:
