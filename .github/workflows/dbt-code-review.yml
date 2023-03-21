@@ -24,7 +24,7 @@ jobs:
           python-version: '3.9'
       - name: Install SQLFluff and dbt
         run: |
-          pip install sqlfluff==0.13.1
+          pip install sqlfluff
           pip install dbt
       - name: Lint project
         run: sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
