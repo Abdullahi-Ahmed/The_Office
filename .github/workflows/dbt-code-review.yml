@@ -27,7 +27,7 @@ jobs:
           pip install sqlfluff
           pip install dbt-snowflake
       - name: Copy profiles.yml
-        run: cp ./profiles.yml ~/.dbt/profiles.yml
+        run: cp .github/workflows/profiles.yml ~/.dbt/profiles.yml
       - name: Lint project
         run: sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
       - name: Test project
