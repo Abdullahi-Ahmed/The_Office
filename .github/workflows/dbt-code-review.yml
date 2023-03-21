@@ -10,6 +10,17 @@ on:
       tags:
         description: 'Test scenario tags'  
 
+env:
+  DTB_PROFILE_TARGET : ${{ secrets.DTB_PROFILE_TARGET  }}
+  DTB_PROFILE_ACCOUNT: ${{ secrets.DTB_PROFILE_ACCOUNT }}
+  DTB_PROFILE_USER : ${{ secrets.DTB_PROFILE_USER  }}
+  DTB_PROFILE_PW : ${{ secrets.DTB_PROFILE_PW  }}
+  DTB_PROFILE_ROLE : ${{ secrets.DTB_PROFILE_ROLE  }}
+  DTB_PROFILE_DB : ${{ secrets.DTB_PROFILE_DB  }}
+  DTB_PROFILE_WH  : ${{ secrets.DTB_PROFILE_WH   }}
+  DTB_PROFILE_SCHEMA : ${{ secrets.DTB_PROFILE_SCHEMA  }}
+
+
 jobs:
   lint_and_test_project:
     name: Lint and Test dbt project
@@ -26,11 +37,10 @@ jobs:
         run: |
           pip install sqlfluff
           pip install dbt-snowflake
-      - name: Copy profiles.yml
-        run: cp .github/workflows/profiles.yml ~/.dbt/profiles.yml
       - name: Lint project
         run: sqlfluff lint models --dialect snowflake --rules L019,L020,L021,L022
       - name: Test project
-        run: dbt test
+        run: |
+          dbt test --profiles-dir ./profiles.yml
       - name: Print success message
         run: echo "The Code Seems Good to GO!"
