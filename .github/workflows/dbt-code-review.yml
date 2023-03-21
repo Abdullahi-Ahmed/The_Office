@@ -1,14 +1,8 @@
 name: lint and test dbt project on pull request
 
-on: 
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Test scenario tags'  
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
 
 env:
   DBT_PROFILES_DIR: ./
